@@ -1,23 +1,53 @@
 # AdaptEd — Error-Aware Adaptive Learning
 
-MVP for IP_PS-31 · Team 9.
+> **AI Tool for Creating Educational Content for Children with Learning Disabilities**
 
-## Core loop
-Any concept → learner answer → error analysis → pedagogical strategy → new representation → reassessment → repeat until mastery, capped at 3 reassessment rounds.
+AdaptEd is a research prototype that explores how generative AI can adapt educational content based on the **specific error made by a learner**, rather than simply making questions easier or harder.
 
-## Run locally
+The system follows a closed-loop learning process:
 
-```bash
-npm install
-cp .env.example .env.local
-# add GOOGLE_GENERATIVE_AI_API_KEY to .env.local
-npm run dev
-```
+**Error → Diagnosis → Pedagogical Strategy → Representation → Reassessment**
 
-Open http://localhost:3000.
+---
 
-The app only uses Gemini responses. It will show a configuration error if the
-key is missing, or an actionable quota error if the provider rejects a request.
+## 🎯 Problem
 
-## Safety
-This is a research prototype, not a medical or learning-disability diagnostic tool. AI outputs should be reviewed by educators.
+Learners with learning difficulties may understand a concept differently even when they receive the same educational material.
+
+Traditional educational content and many adaptive systems may respond to an incorrect answer by:
+
+- marking it wrong
+- giving the correct answer
+- reducing difficulty
+- providing more practice
+
+However, these approaches may not address **why the learner made the error**.
+
+AdaptEd explores a different approach: use the learner's error as evidence for selecting a more suitable way to explain the same concept.
+
+---
+
+## 💡 Solution
+
+AdaptEd analyzes a learner's response and attempts to identify the likely type of difficulty.
+
+It then selects a pedagogical strategy and generates an alternative representation of the same concept.
+
+The learner is subsequently reassessed to determine whether the intervention improved their understanding.
+
+### Example
+
+A learner answers:
+
+> `1/2 + 1/4 = 2/6`
+
+Instead of simply returning:
+
+> ❌ Incorrect. The answer is 3/4.
+
+AdaptEd can identify a likely denominator-related misconception and provide an explanation such as:
+
+```text
+1/2 = 2/4
+
+2/4 + 1/4 = 3/4
